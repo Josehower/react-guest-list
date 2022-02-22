@@ -102,7 +102,7 @@ export default function App() {
   const [lastName, setLastName] = useState('');
   const [guests, setGuests] = useState([]);
   // const [newGuests, setNewGuests] = useState([]);
-  // const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const baseUrl = 'https://guest-list-random951.herokuapp.com';
@@ -185,13 +185,14 @@ export default function App() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ attending: attending }),
+      body: JSON.stringify({ attending: !isChecked }),
     });
     const updatedGuest = await response.json();
     console.log(updatedGuest);
     const copyGuestList = [...guests];
     const guestFind = copyGuestList.find((guest) => guest.id === id);
     guestFind.attending = attending;
+    setIsChecked(!isChecked);
     setGuests(copyGuestList);
   };
 
